@@ -16,7 +16,7 @@ headers = {
 # Set up the payload (your question)
 payload = {
     "model": "text-davinci-002",  # Model name
-    "prompt": "How do I call ChatGPT via its API in Python?",  # Your question
+    "prompt": "How do I call ChatGPT via its API in Python? Read the api key into a variable called api_key from a file called api_key.txt and print only the codeblock.",  # Your question
     "max_tokens": 100  # Maximum number of tokens in the response
 }
 
