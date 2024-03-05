@@ -1,35 +1,23 @@
-import requests
+import openai
 
-# Read the API key from a file
-with open("api_key.txt", "r") as file:
-    api_key = file.read().strip()
+# Set your OpenAI API key here
+api_key = "YOUR_OPENAI_API_KEY"
 
-# Set up the API endpoint
-api_endpoint = "https://api.openai.com/v1/completions"
+# Initialize the OpenAI API client
+openai.api_key = api_key
 
-# Set up the headers with your API key
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}"
-}
+# Define the prompt to ask ChatGPT to generate its own source code
+prompt = "Generate the Python code for a program that prompts ChatGPT using the Python API to return its own source code."
 
-# Set up the payload (your question)
-payload = {
-    "model": "text-davinci-002",  # Model name
-    "prompt": "How do I call ChatGPT via its API in Python? Read the api key into a variable called api_key from a file called api_key.txt and print only the codeblock.",  # Your question
-    "max_tokens": 100  # Maximum number of tokens in the response
-}
+# Use the completion endpoint to generate the source code
+response = openai.Completion.create(
+    engine="text-davinci-003",
+    prompt=prompt,
+    max_tokens=200,
+    n=1,
+    stop=None,
+    temperature=0.7
+)
 
-# Send the request to the API
-response = requests.post(api_endpoint, headers=headers, json=payload)
-
-# Check if the request was successful
-if response.status_code == 200:
-    # Get the response from the API
-    data = response.json()
-    # Extract the completion (response)
-    completion = data["choices"][0]["text"]
-    print(completion)
-else:
-    print("Failed to retrieve response from the API. Status code:", response.status_code)
-
+# Print the generated source code
+print(response.choices[0].text.strip())
